@@ -9,7 +9,8 @@ import {
     Image,
     Dimensions,
     Keyboard,
-    ImageBackground
+    ImageBackground,
+    ScrollView
 
 } from 'react-native';
 import { Container, Content } from 'native-base';
@@ -92,16 +93,55 @@ export default class Wishlist extends Component {
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop:15, marginLeft:15 }}>
                             <Text style={{ fontSize: 12, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Wishlist</Text>
                         </View>
+
+                        <ScrollView showsHorizontalScrollIndicator={false}>
+                            {this.renderGallery(menuItems)}
+                        </ScrollView>
                     </View>
                 </View>
             </Container>
         );
     };
 
+    renderGallery(data) {
+        return (
+            <View style={styles.table}>
+                {data.map((data, id) => (
+                    <View style={styles.cell} key={id}>
+                        <ImageBackground
+                            source={{ uri: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg' }}
+                            style={{ height: 150, marginHorizontal: 20, marginVertical: 10 }}
+                            imageStyle={{ borderRadius: 5, }}
+                        >
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                                <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.SECONDARY_COLOR }]} block iconLeft>
+                                    <View style={{ flexDirection: 'row', marginHorizontal: 25 }}>
+                                        <Icon
+                                            name="controller-play"
+                                            size={30}
+                                            type='entypo'
+                                            color={lightTheme.DEFAULT_COLOR}
+                                        />
+                                    </View>
 
+                                </TouchableOpacity>
+                            </View>
+
+                        </ImageBackground>
+
+                    </View>
+                ))}
+            </View>
+
+        );
+    }
 
 }
-
+const menuItems = [
+    { id: 1, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 2, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+   
+];
 
 
 
@@ -139,6 +179,33 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'Montserrat-Regular'
     },
+    buttonContainer: {
+        height: 40,
+        backgroundColor: lightTheme.PRIMARY_TEXT_COLOR,
+        marginLeft: 5,
+        marginRight: 5,
+        borderRadius: 7,
+        marginTop: 5,
+        marginBottom: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: 'gray',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 1,
+        elevation: 10
+    },
+
+    table: {
+        marginTop: 15,
+        flexWrap: 'wrap',
+        flexDirection: 'row'
+    },
+    cell: {
+        flexBasis: '100%',
+        flex: 1,
+    },
+
 
 });
 

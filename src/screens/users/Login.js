@@ -108,7 +108,7 @@ export default class Login extends Component {
                                     </View>
 
 
-                                    <TouchableOpacity style={styles.buttonContainer} onPress={() => this.loginRequest()} >
+                                    <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('app')} >
                                         <Text style={{ fontFamily: 'Montserrat-Regular', color: '#fff', fontSize: 14 }}>Log in</Text>
                                     </TouchableOpacity>
 

@@ -10,7 +10,6 @@ import {
     Dimensions,
     Keyboard,
     ImageBackground
-
 } from 'react-native';
 import { Container, Content } from 'native-base';
 import { lightTheme } from '../../theme/colors';
@@ -19,8 +18,10 @@ import * as images from '../../assets/images/';
 import { Icon } from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import HeaderBar from '../../components/HeaderBar';
+import { ScrollView } from 'react-native';
 
-
+import StarRating from 'react-native-star-rating';
+import CreditCard from '../../components/CreditCard';
 
 export default class Home extends Component {
     constructor(props) {
@@ -87,8 +88,42 @@ export default class Home extends Component {
                         </View>
                     </View>
                 </Content>
-                <View style={{ position: 'absolute', left: 0, top: 180, flex: 1, width: Dimensions.get('window').width, alignItems: 'center', height: Dimensions.get('window').height, }}>
-                    <View style={{ flex: 1, backgroundColor: '#fff', width: Dimensions.get('window').width - 50, height: Dimensions.get('window').height, }}>
+                <View style={{ position: 'absolute', left: 0, top: 160, flex: 1, width: Dimensions.get('window').width, alignItems: 'center', height: Dimensions.get('window').height, }}>
+                    <View style={{ flex: 1, backgroundColor: '#fff', width: Dimensions.get('window').width - 50, height: Dimensions.get('window').height, paddingHorizontal: 5 }}>
+
+
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15, marginLeft: 15 }}>
+                            <CreditCard />
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15, marginLeft: 15 }}>
+                            <Text style={{ fontSize: 12, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Categories</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', marginTop: 6 }}>
+
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+
+                                <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.PRIMARY_COLOR }]} block iconLeft>
+                                    <Text style={{ color: '#fff', fontSize: 12, fontWeight: '600', marginHorizontal: 15 }}>Enterpreneur </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.buttonContainer} block iconLeft>
+                                    <Text style={{ color: '#000', fontSize: 12, fontWeight: '600', marginHorizontal: 15 }}> Engineering </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.buttonContainer} block iconLeft>
+                                    <Text style={{ color: '#000', fontSize: 12, fontWeight: '600', marginHorizontal: 15 }}>Computer </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.buttonContainer} block iconLeft>
+                                    <Text style={{ color: '#000', fontSize: 12, fontWeight: '600', marginHorizontal: 15 }}>Economics </Text>
+                                </TouchableOpacity>
+                            </ScrollView>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15, marginLeft: 15 }}>
+                            <Text style={{ fontSize: 12, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Featured Courses</Text>
+                        </View>
+                        <ScrollView showsHorizontalScrollIndicator={false}>
+                            {this.renderGallery(menuItems)}
+                        </ScrollView>
+
                     </View>
                 </View>
             </Container>
@@ -97,10 +132,93 @@ export default class Home extends Component {
 
 
 
+
+    renderGallery(data) {
+        return (
+            <View style={styles.table}>
+                {data.map((data, id) => (
+                    <View style={styles.cell} key={id}>
+                        <ImageBackground
+                            source={{ uri: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg' }}
+                            style={{ height: 100, marginHorizontal: 10, marginVertical: 5 }}
+                            imageStyle={{ borderRadius: 5, }}
+                        >
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                                <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.SECONDARY_COLOR }]} block iconLeft>
+                                    <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
+                                        <Icon
+                                            name="controller-play"
+                                            size={20}
+                                            type='entypo'
+                                            color={lightTheme.DEFAULT_COLOR}
+                                        />
+                                    </View>
+
+                                </TouchableOpacity>
+                            </View>
+
+                        </ImageBackground>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginLeft: 15 }}>
+                            <Text style={{ fontSize: 10, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Bold' }}>Introduction to Nature</Text>
+                        </View>
+                        <View style={{ marginLeft: 15, width: 100, marginTop: 3 }}>
+                            <StarRating
+                                disabled={false}
+                                maxStars={5}
+                                rating={this.state.starCount}
+                                selectedStar={(rating) => this.setState({ starCount: rating })}
+                                iconSet={'FontAwesome'}
+                                starSize={15}
+                                starStyle={{ borderColor: 'red' }}
+                                fullStarColor={lightTheme.PRIMARY_COLOR}
+                                emptyStarColor={lightTheme.PRIMARY_COLOR}
+                            />
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginLeft: 15 }}>
+                            <Text style={{ fontSize: 10, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>3,000 NGN</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', marginTop: 6, marginLeft: 5 }}>
+
+                            <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.PRIMARY_COLOR }]} block iconLeft>
+                                <Text style={{ color: '#fff', fontSize: 10, fontWeight: '600', marginHorizontal: 8 }}>Buy Now </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.SECONDARY_COLOR }]} block iconLeft>
+                                <View style={{ flexDirection: 'row', marginHorizontal: 20 }}>
+                                    <Icon
+                                        name="shoppingcart"
+                                        size={20}
+                                        type='antdesign'
+                                        color={lightTheme.DEFAULT_COLOR}
+                                    />
+                                </View>
+
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+                ))}
+            </View>
+
+        );
+    }
+
+
+
+
+
 }
 
 
-
+const menuItems = [
+    { id: 1, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 2, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 1, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 2, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+];
 
 const styles = StyleSheet.create({
     body: {
@@ -136,7 +254,32 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'Montserrat-Regular'
     },
+    buttonContainer: {
+        height: 30,
+        backgroundColor: lightTheme.PRIMARY_TEXT_COLOR,
+        marginLeft: 5,
+        marginRight: 5,
+        borderRadius: 3,
+        marginTop: 5,
+        marginBottom: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: 'gray',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 1,
+        elevation: 10
+    },
+
+    table: {
+        marginTop: 15,
+        flexWrap: 'wrap',
+        flexDirection: 'row'
+    },
+    cell: {
+        flexBasis: '50%',
+        flex: 1,
+    },
 
 });
 
-//#7758b4

@@ -20,7 +20,7 @@ class AppNavigator extends Component {
 
     return (
       <Tab.Navigator
-        initialRouteName="Home"
+        initialRouteName="Collection"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -95,7 +95,7 @@ class AppNavigator extends Component {
         tabBarOptions={{
           activeTintColor: lightTheme.PRIMARY_COLOR,
           inactiveTintColor: lightTheme.PRIMARY_INACTIVE_COLOR,
-          style: { height: 60 },
+          style: { height: 50 },
           showLabel: false,
           keyboardHidesTabBar: true
 

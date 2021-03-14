@@ -36,7 +36,7 @@ export default class Splash extends Component {
 
 
   initPage = async () => {
-    this.props.navigation.navigate('Intro');
+    this.props.navigation.navigate('Welcome');
   }
 
 

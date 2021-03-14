@@ -8,6 +8,7 @@ import { logo } from '../assets/images';
 import Register from '../screens/users/Register';
 import Home from '../screens/activities/Home';
 import App from './app-navigator';
+import Welcome from '../screens/onBoarding/Welcome';
 
 
 //console.disableYellowBox = true;
@@ -26,9 +27,10 @@ class AppStack extends Component {
               headerTintColor: 'white',
               headerShown: false,
              }}
-             initialRouteName="app">
+             initialRouteName="Splash">
 
             <Stack.Screen name="Splash" component={Splash}  />
+            <Stack.Screen name="Welcome" component={Welcome}  />
             <Stack.Screen name="login" component={Login}  />
             <Stack.Screen name="register" component={Register}  />
             <Stack.Screen name="home" component={Home}  />

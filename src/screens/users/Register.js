@@ -224,7 +224,7 @@ export default class Register extends Component {
                                     </View>
 
 
-                                    <TouchableOpacity style={styles.buttonContainer} onPress={() => this.loginRequest()} >
+                                    <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('app')} >
                                         <Text style={{ fontFamily: 'Montserrat-Regular', color: '#fff', fontSize: 14 }}>CREATE ACCOUNT</Text>
                                     </TouchableOpacity>
 
