@@ -23,7 +23,7 @@ import HeaderBar from '../../components/HeaderBar';
 
 
 
-export default class Collection extends Component {
+export default class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,7 +38,9 @@ export default class Collection extends Component {
 
 
     async loginRequest() {
+
         const { email, password, is_valide_mail } = this.state
+
     }
 
 
@@ -90,8 +92,9 @@ export default class Collection extends Component {
                 <View style={{ position: 'absolute', left: 0, top: 180, flex: 1, width: Dimensions.get('window').width, alignItems: 'center', height: Dimensions.get('window').height, }}>
                     <View style={{ flex: 1, backgroundColor: '#fff', width: Dimensions.get('window').width - 50, height: Dimensions.get('window').height, }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop:15, marginLeft:15 }}>
-                            <Text style={{ fontSize: 12, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Collections</Text>
+                            <Text style={{ fontSize: 12, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Cart</Text>
                         </View>
+
                         <ScrollView showsHorizontalScrollIndicator={false}>
                             {this.renderGallery(menuItems)}
                         </ScrollView>
@@ -101,9 +104,6 @@ export default class Collection extends Component {
         );
     };
 
-
-
-
     renderGallery(data) {
         return (
             <View style={styles.table}>
@@ -112,7 +112,7 @@ export default class Collection extends Component {
                         <ImageBackground
                             source={{ uri: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg' }}
                             style={{ height: 150, marginHorizontal: 20, marginVertical: 10 }}
-                            imageStyle={{ borderRadius: 5, }}
+                            imageStyle={{ borderRadius: 10, }}
                         >
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                                 <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.SECONDARY_COLOR }]} block iconLeft>
@@ -130,6 +130,26 @@ export default class Collection extends Component {
 
                         </ImageBackground>
 
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginLeft: 20 }}>
+                            <Text style={{ fontSize: 10, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Bold' }}>Title: Introduction to nature</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20 }}>
+                            <Text style={{ fontSize: 9, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Bold' }}>Description: Introduction to naturee</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20 }}>
+                            <Text style={{ fontSize: 9, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Bold' }}>Duration: 1hr : 30mins</Text>
+                        </View>
+                       
+                       
+                        <View style={{ marginTop: 6, marginHorizontal: 15 }}>
+
+                            <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.SECONDARY_COLOR }]} block iconLeft>
+                            <Text style={{ color: '#fff', fontSize: 11, fontWeight: '600', marginHorizontal: 8 }}>Buy Now </Text>
+
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
                 ))}
             </View>
@@ -138,17 +158,14 @@ export default class Collection extends Component {
     }
 
 }
-
 const menuItems = [
     { id: 1, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
     { id: 2, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
     { id: 1, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
     { id: 2, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+   
 ];
+
 
 
 const styles = StyleSheet.create({

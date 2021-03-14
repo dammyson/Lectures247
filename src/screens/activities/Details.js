@@ -23,7 +23,7 @@ import HeaderBar from '../../components/HeaderBar';
 
 
 
-export default class Collection extends Component {
+export default class Details extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,7 +38,9 @@ export default class Collection extends Component {
 
 
     async loginRequest() {
+
         const { email, password, is_valide_mail } = this.state
+
     }
 
 
@@ -83,24 +85,91 @@ export default class Collection extends Component {
                         <View style={styles.mainbody}>
 
                         </View>
-                        <View style={{ flex: 1, height: Dimensions.get('window').height }}>
-                        </View>
+
                     </View>
                 </Content>
-                <View style={{ position: 'absolute', left: 0, top: 180, flex: 1, width: Dimensions.get('window').width, alignItems: 'center', height: Dimensions.get('window').height, }}>
+                <View style={{ position: 'absolute', left: 0, top: 180, flex: 1, width: Dimensions.get('window').width, alignItems: 'center', height: Dimensions.get('window').height, paddingBottom: 80 }}>
                     <View style={{ flex: 1, backgroundColor: '#fff', width: Dimensions.get('window').width - 50, height: Dimensions.get('window').height, }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop:15, marginLeft:15 }}>
-                            <Text style={{ fontSize: 12, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Collections</Text>
-                        </View>
+
                         <ScrollView showsHorizontalScrollIndicator={false}>
-                            {this.renderGallery(menuItems)}
+                            <View style={{ flexDirection: 'row', alignItems: 'center',  }}>
+                               
+                                    {this.renderSingle()}
+                              
+                            </View>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginTop: 15, }}>
+                                <Text style={{ fontSize: 12, color: lightTheme.BLACK_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-SemiBold' }}>Similar Videos</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15, }}>
+                              
+                                    {this.renderGallery(menuItems)}
+                              
+                            </View>
                         </ScrollView>
                     </View>
+
                 </View>
             </Container>
         );
     };
 
+    renderSingle() {
+        return (
+            <View style={{ marginTop: 15, flexWrap: 'wrap', flexDirection: 'row' }}>
+
+                <View style={{ flexBasis: '100%', flex: 1, }} >
+                    <ImageBackground
+                        source={{ uri: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg' }}
+                        style={{ height: 150, marginHorizontal: 20, marginVertical: 10 }}
+                        imageStyle={{ borderRadius: 10, }}
+                    >
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                            <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.SECONDARY_COLOR }]} block iconLeft>
+                                <View style={{ flexDirection: 'row', marginHorizontal: 25 }}>
+                                    <Icon
+                                        name="controller-play"
+                                        size={30}
+                                        type='entypo'
+                                        color={lightTheme.DEFAULT_COLOR}
+                                    />
+                                </View>
+
+                            </TouchableOpacity>
+                        </View>
+
+                    </ImageBackground>
+
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginLeft: 20 }}>
+                        <Text style={{ fontSize: 10, color: lightTheme.BLACK_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Bold' }}>Title: Introduction to nature</Text>
+                    </View>
+
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20 }}>
+                        <Text style={{ fontSize: 9, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Bold' }}>Description: Introduction to naturee</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20 }}>
+                        <Text style={{ fontSize: 9, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Bold' }}>Duration: 1hr : 30mins</Text>
+                    </View>
+
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20 }}>
+                        <Text style={{ fontSize: 9, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Bold' }}>Cost: NGN 3,000</Text>
+                    </View>
+
+
+                    <View style={{ marginTop: 6, marginHorizontal: 15 }}>
+
+                        <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.PRIMARY_COLOR }]} block iconLeft>
+                            <Text style={{ color: '#fff', fontSize: 11, fontWeight: '600', marginHorizontal: 8 }}>Buy Now </Text>
+
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+
+            </View>
+
+        );
+    }
 
 
 
@@ -111,15 +180,15 @@ export default class Collection extends Component {
                     <View style={styles.cell} key={id}>
                         <ImageBackground
                             source={{ uri: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg' }}
-                            style={{ height: 150, marginHorizontal: 20, marginVertical: 10 }}
+                            style={{ height: 100, marginHorizontal: 10, marginVertical: 5 }}
                             imageStyle={{ borderRadius: 5, }}
                         >
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                                 <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.SECONDARY_COLOR }]} block iconLeft>
-                                    <View style={{ flexDirection: 'row', marginHorizontal: 25 }}>
+                                    <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
                                         <Icon
                                             name="controller-play"
-                                            size={30}
+                                            size={20}
                                             type='entypo'
                                             color={lightTheme.DEFAULT_COLOR}
                                         />
@@ -130,6 +199,8 @@ export default class Collection extends Component {
 
                         </ImageBackground>
 
+
+
                     </View>
                 ))}
             </View>
@@ -137,18 +208,21 @@ export default class Collection extends Component {
         );
     }
 
-}
 
+
+}
 const menuItems = [
     { id: 1, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
     { id: 2, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
     { id: 1, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
     { id: 2, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 1, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 2, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 1, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+    { id: 2, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
+
 ];
+
 
 
 const styles = StyleSheet.create({
@@ -208,9 +282,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     cell: {
-        flexBasis: '100%',
-        flex: 1,
+        flexBasis: '50%',
+
     },
+
 
 
 });

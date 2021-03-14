@@ -5,9 +5,10 @@ import { lightTheme } from '../theme/colors';
 import { View, Dimensions, Text } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-import Home from '../screens/activities/Home';
+import Home from './home-stack';
 import Collection from '../screens/activities/Collection';
 import Wishlist from '../screens/activities/Wishlist';
+import Profile from '../screens/activities/Profile';
 
 
 
@@ -20,7 +21,7 @@ class AppNavigator extends Component {
 
     return (
       <Tab.Navigator
-        initialRouteName="Collection"
+        initialRouteName="Home"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -104,7 +105,7 @@ class AppNavigator extends Component {
 
 
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Account" component={Home} />
+        <Tab.Screen name="Account" component={Profile} />
         <Tab.Screen name="Wishlist" component={Wishlist} />
         <Tab.Screen name="Collection" component={Collection} />
         <Tab.Screen name="Search" component={Home} />

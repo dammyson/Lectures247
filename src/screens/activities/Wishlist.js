@@ -64,6 +64,7 @@ export default class Wishlist extends Component {
 
                                         <HeaderBar
                                             image={images.user}
+                                            onNotificationPress={()=> this.props.navigation.navigate('cart')}
                                         />
                                         <View style={{ marginLeft: 20, justifyContent: 'center', marginTop: 20 }}>
 
@@ -111,7 +112,7 @@ export default class Wishlist extends Component {
                         <ImageBackground
                             source={{ uri: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg' }}
                             style={{ height: 150, marginHorizontal: 20, marginVertical: 10 }}
-                            imageStyle={{ borderRadius: 5, }}
+                            imageStyle={{ borderRadius: 10, }}
                         >
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                                 <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.SECONDARY_COLOR }]} block iconLeft>

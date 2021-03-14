@@ -9,7 +9,7 @@ import {
     Image,
     Dimensions,
     Keyboard,
-    ImageBackground,
+    Switch,
     ScrollView
 
 } from 'react-native';
@@ -23,12 +23,12 @@ import HeaderBar from '../../components/HeaderBar';
 
 
 
-export default class Collection extends Component {
+export default class Settings extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loading: false,
-
+            isEnabled: false
         };
     }
 
@@ -38,7 +38,18 @@ export default class Collection extends Component {
 
 
     async loginRequest() {
+
         const { email, password, is_valide_mail } = this.state
+
+    }
+
+    toggleSwitch() {
+        if (this.state.isEnabled) {
+            this.setState({ isEnabled: false })
+        } else {
+            this.setState({ isEnabled: true })
+        }
+
     }
 
 
@@ -60,9 +71,8 @@ export default class Collection extends Component {
                                 <LinearGradient colors={[lightTheme.PRIMARY_COLOR, lightTheme.PRIMARY_COLOR_LIGHT]} start={{ x: 1, y: 1 }} end={{ x: 1, y: 0 }} style={{ flex: 1 }}>
                                     <View style={{ flex: 1 }}>
 
-                                    <HeaderBar
+                                        <HeaderBar
                                             image={images.user}
-                                            onNotificationPress={()=> console.warn('llfllfl')}
                                         />
                                         <View style={{ marginLeft: 20, justifyContent: 'center', marginTop: 20 }}>
 
@@ -89,11 +99,12 @@ export default class Collection extends Component {
                 </Content>
                 <View style={{ position: 'absolute', left: 0, top: 180, flex: 1, width: Dimensions.get('window').width, alignItems: 'center', height: Dimensions.get('window').height, }}>
                     <View style={{ flex: 1, backgroundColor: '#fff', width: Dimensions.get('window').width - 50, height: Dimensions.get('window').height, }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop:15, marginLeft:15 }}>
-                            <Text style={{ fontSize: 12, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Collections</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15, marginLeft: 15 }}>
+                            <Text style={{ fontSize: 12, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Settings</Text>
                         </View>
+
                         <ScrollView showsHorizontalScrollIndicator={false}>
-                            {this.renderGallery(menuItems)}
+                            {this.renderGallery()}
                         </ScrollView>
                     </View>
                 </View>
@@ -101,54 +112,52 @@ export default class Collection extends Component {
         );
     };
 
-
-
-
-    renderGallery(data) {
+    renderGallery() {
         return (
-            <View style={styles.table}>
-                {data.map((data, id) => (
-                    <View style={styles.cell} key={id}>
-                        <ImageBackground
-                            source={{ uri: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg' }}
-                            style={{ height: 150, marginHorizontal: 20, marginVertical: 10 }}
-                            imageStyle={{ borderRadius: 5, }}
-                        >
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-                                <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.SECONDARY_COLOR }]} block iconLeft>
-                                    <View style={{ flexDirection: 'row', marginHorizontal: 25 }}>
-                                        <Icon
-                                            name="controller-play"
-                                            size={30}
-                                            type='entypo'
-                                            color={lightTheme.DEFAULT_COLOR}
-                                        />
-                                    </View>
+            <View style={{ marginTop: 20 }}>
 
-                                </TouchableOpacity>
-                            </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15, marginHorizontal: 20 }}>
+                    <Text style={{ fontSize: 12, flex:1, color: lightTheme.BLACK_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-SemiBold' }}>Notification</Text>
+                    <View style={styles.container}>
+                                            <Switch
+                                                trackColor={{ false: lightTheme.SETTING_HEADER, true: lightTheme.PRIMARY_COLOR }}
+                                                thumbColor={this.state.isEnabled ?  lightTheme.PRIMARY_COLOR : "#f4f3f4"}
+                                                ios_backgroundColor="#3e3e3e"
+                                                onValueChange={() => this.toggleSwitch()}
+                                                value={this.state.isEnabled}
+                                            />
+                                        </View>
+                </View>
 
-                        </ImageBackground>
 
-                    </View>
-                ))}
+
+                <View style={{ marginTop: 15, marginLeft: 20 }}>
+                    <Text style={{ fontSize: 12, color: lightTheme.BLACK_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-SemiBold' }}>Theme</Text>
+                    <Text style={{ fontSize: 10, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Light</Text>
+                </View>
+
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15, marginLeft: 20 }}>
+                    <Text style={{ fontSize: 12, color: lightTheme.BLACK_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-SemiBold' }}>Change Password</Text>
+                </View>
+
+
+
+
+
+                <View style={{ marginTop: 15, marginHorizontal: 15 }}>
+
+                    <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: lightTheme.PRIMARY_COLOR }]} block iconLeft>
+                        <Text style={{ color: '#fff', fontSize: 11, fontWeight: '600', marginHorizontal: 8 }}>Log out </Text>
+
+                    </TouchableOpacity>
+                </View>
             </View>
 
         );
     }
 
 }
-
-const menuItems = [
-    { id: 1, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 2, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 1, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 2, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-    { id: 3, data: 'https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg', },
-];
 
 
 const styles = StyleSheet.create({
@@ -191,25 +200,36 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         borderRadius: 7,
-        marginTop: 5,
+        marginTop: 10,
         marginBottom: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: 'gray',
+
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.8,
         shadowRadius: 1,
         elevation: 10
     },
 
-    table: {
-        marginTop: 15,
-        flexWrap: 'wrap',
-        flexDirection: 'row'
+    textInputContainer: {
+        flexDirection: 'row',
+        marginRight: 20,
+        marginLeft: 20,
+        height: 40,
+        borderColor: lightTheme.SECONDARY_TEXT_COLOR,
+        marginBottom: 10,
+        marginTop: 10,
+        paddingLeft: 5,
+        borderBottomWidth: 0.5,
     },
-    cell: {
-        flexBasis: '100%',
+    input: {
         flex: 1,
+        marginLeft: 5,
+        color: lightTheme.SECONDARY_TEXT_COLOR,
+    },
+    text_icon: {
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
 

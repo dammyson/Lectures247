@@ -18,7 +18,9 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default class HeaderBar extends Component {
   render() {
-    const { image, onPress } = this.props;
+
+    const { image, onPress, onNotificationPress } = this.props;
+
     return (
       <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 20 }}>
 
@@ -49,7 +51,7 @@ export default class HeaderBar extends Component {
 
         <View style={{ marginLeft: 20, justifyContent: 'center', }}>
           <View style={{ flexDirection: 'row', marginTop: 20 }}>
-            <TouchableOpacity style={{ marginHorizontal: 6 }}>
+            <TouchableOpacity onPress={() => onNotificationPress()} style={{ marginHorizontal: 6 }}>
               <Icon
                 name="bell"
                 size={20}

@@ -19,31 +19,29 @@ import Details from '../screens/activities/Details';
 
 //console.disableYellowBox = true;
 
-class AppStack extends Component {
+class HomeStack extends Component {
 
   render() {
     const Stack = createStackNavigator();
     return (
-      <Root>
-        <NavigationContainer >
-      
           <Stack.Navigator
           screenOptions={{ 
               gestureEnabled: false,
               headerTintColor: 'white',
               headerShown: false,
              }}
-             initialRouteName="app">
-            <Stack.Screen name="Splash" component={Splash}  />
-            <Stack.Screen name="Welcome" component={Welcome}  />
-            <Stack.Screen name="login" component={Login}  />
-            <Stack.Screen name="register" component={Register}  />
-            <Stack.Screen name="app" component={App}  />
+             initialRouteName="home">
+               
+            <Stack.Screen name="home" component={Home}  />
+            <Stack.Screen name="cart" component={Cart}  />
+            <Stack.Screen name="notification" component={Notification}  />
+            <Stack.Screen name="addcard" component={AddCard}  />
+            <Stack.Screen name="settings" component={Settings}  />
+            <Stack.Screen name="details" component={Details}  />
           </Stack.Navigator>
-        </NavigationContainer>
-        </Root>
+       
       );
   }
 
 }
-export default AppStack;
+export default HomeStack;

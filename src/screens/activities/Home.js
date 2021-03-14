@@ -64,6 +64,7 @@ export default class Home extends Component {
 
                                         <HeaderBar
                                             image={images.user}
+                                            onNotificationPress={()=> this.props.navigation.navigate('cart')}
                                         />
                                         <View style={{ marginLeft: 20, justifyContent: 'center', marginTop: 20 }}>
 
