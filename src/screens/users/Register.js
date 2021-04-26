@@ -17,13 +17,25 @@ import { lightTheme } from '../../theme/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import { Icon } from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import ActivityIndicator from '../../components/ActivityIndicator';
+import { showMessage } from 'react-native-flash-message';
+import { getHeaders, baseUrl } from '../../utilities';
 
 export default class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loading: false,
-
+            lname: 'Ayeni',
+            fname: 'Ayobami',
+            username: 'captain',
+            email: 'pechbusorg@gmail.com',
+            phone: '2348166219698',
+            school: 'KSU',
+            level: '400',
+            study_course: 'CS',
+            password: 'WelcomeDami42day',
+            confirm_password: 'WelcomeDami42day'
         };
     }
 
@@ -32,9 +44,50 @@ export default class Register extends Component {
     }
 
 
-    async loginRequest() {
+    processRegistration() {
 
-        const { email, password, is_valide_mail } = this.state
+        const { lname, fname, username, email, phone, school, level, study_course, password, confirm_password } = this.state
+
+
+        if (email == "" || password == "") {
+            showMessage('warning', 'field(s) cannot be empty')
+            return
+        }
+
+        var body = JSON.stringify({
+            firstName: fname,
+            lastName: lname,
+            email: email,
+            location: "Lagos",
+            courseofstudy: study_course,
+            level: level,
+            phoneNumber: phone,
+            gender: "Male",
+            username: username,
+            password: password ,
+            confirmPassword: confirm_password,
+            acceptterms: true
+        })
+
+        this.setState({ loading: true })
+        console.warn(baseUrl() + 'accounts/registration')
+        fetch(baseUrl() + 'accounts/registration', {
+            method: 'POST', headers: getHeaders(false, ""), body: body
+        })
+            .then(res => res.text())
+            .then(res => {
+                this.setState({ loading: false })
+                console.warn(res);
+                // if (res.status) {
+                //     //this.props.navigation.navigate('category');
+                // } else {
+                //     showMessage('error', res.message)
+                // }
+            }).catch((error) => {
+                this.setState({ loading: false })
+                showMessage('error', error.message)
+                console.warn(error);
+            });
 
     }
 
@@ -120,6 +173,45 @@ export default class Register extends Component {
                                                 defaultValue={this.state.email}
                                                 style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
                                                 onChangeText={(text) => this.setState({ username: text })}
+                                                onSubmitEditing={() => this.passwordInput.focus()}
+                                            />
+                                        </View>
+                                    </View>
+
+
+                                    <View style={styles.textInputContainer}>
+
+                                        <View style={styles.input}>
+                                            <TextInput
+                                                placeholder="Email "
+                                                placeholderTextColor={lightTheme.DEFAULT_COLOR}
+                                                returnKeyType="next"
+                                                keyboardType='email-address'
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                                defaultValue={this.state.email}
+                                                style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
+                                                onChangeText={(text) => this.setState({ email: text })}
+                                                onSubmitEditing={() => this.passwordInput.focus()}
+                                            />
+                                        </View>
+                                    </View>
+
+
+                                    <View style={styles.textInputContainer}>
+
+
+                                        <View style={styles.input}>
+                                            <TextInput
+                                                placeholder="Phone "
+                                                placeholderTextColor={lightTheme.DEFAULT_COLOR}
+                                                returnKeyType="next"
+                                                keyboardType='numeric'
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                                defaultValue={this.state.email}
+                                                style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
+                                                onChangeText={(text) => this.setState({ phone: text })}
                                                 onSubmitEditing={() => this.passwordInput.focus()}
                                             />
                                         </View>
@@ -217,14 +309,14 @@ export default class Register extends Component {
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
                                                 style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
-                                                onChangeText={(text) => this.setState({ confime_password: text })}
+                                                onChangeText={(text) => this.setState({ confirm_password: text })}
                                                 onSubmitEditing={() => this.passwordInput.focus()}
                                             />
                                         </View>
                                     </View>
 
 
-                                    <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('app')} >
+                                    <TouchableOpacity style={styles.buttonContainer} onPress={() => this.processRegistration()} >
                                         <Text style={{ fontFamily: 'Montserrat-Regular', color: '#fff', fontSize: 14 }}>CREATE ACCOUNT</Text>
                                     </TouchableOpacity>
 

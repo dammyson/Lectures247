@@ -7,7 +7,7 @@ export const loginbaseUrl = () => {
 };
 
 export const baseUrl = () => {
-  return 'http://3.10.80.41:6060/';
+  return 'https://lectures247.azurewebsites.net/';
 };
 
 export const storeToken = async (selectedValue, email) => {
@@ -67,3 +67,23 @@ export const showTopNotification = (type, message)=> {
     icon: type 
   });
 }
+
+
+export const getHeaders = (is_guest, token) => {
+
+  let autorised_headers = {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    'Authorization': 'Bearer ' + token,
+  }
+  
+  let normal_headers = {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  }
+
+  let headers = is_guest ? normal_headers : autorised_headers
+
+  return headers
+
+};

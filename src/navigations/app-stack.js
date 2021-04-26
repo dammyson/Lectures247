@@ -15,6 +15,7 @@ import AddCard from '../screens/activities/AddCard';
 import Profile from '../screens/activities/Profile';
 import Settings from '../screens/activities/Settings';
 import Details from '../screens/activities/Details';
+import Video from '../screens/activities/Video';
 
 
 //console.disableYellowBox = true;
@@ -33,12 +34,14 @@ class AppStack extends Component {
               headerTintColor: 'white',
               headerShown: false,
              }}
-             initialRouteName="app">
+             initialRouteName="Splash">
+
             <Stack.Screen name="Splash" component={Splash}  />
             <Stack.Screen name="Welcome" component={Welcome}  />
             <Stack.Screen name="login" component={Login}  />
             <Stack.Screen name="register" component={Register}  />
             <Stack.Screen name="app" component={App}  />
+            <Stack.Screen name="vd" component={Video}  />
           </Stack.Navigator>
         </NavigationContainer>
         </Root>

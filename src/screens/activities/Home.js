@@ -93,8 +93,8 @@ export default class Home extends Component {
                     <View style={{ flex: 1, backgroundColor: '#fff', width: Dimensions.get('window').width - 50, height: Dimensions.get('window').height, paddingHorizontal: 5 }}>
 
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15, marginLeft: 15 }}>
-                            <CreditCard />
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 1, marginLeft: 15 }}>
+                          
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15, marginLeft: 15 }}>
                             <Text style={{ fontSize: 12, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Categories</Text>
