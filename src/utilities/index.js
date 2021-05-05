@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { showMessage, hideMessage } from "react-native-flash-message";
 
 
@@ -7,13 +7,15 @@ export const loginbaseUrl = () => {
 };
 
 export const baseUrl = () => {
-  return 'https://lectures247.azurewebsites.net/';
+  return 'https://lecture247.azurewebsites.net/';
 };
 
-export const storeToken = async (selectedValue, email) => {
+export const storeToken = async (selectedValue, email, tenantType, user) => {
   try {
     await AsyncStorage.setItem('token', selectedValue);
     await AsyncStorage.setItem('user_email', email);
+    await AsyncStorage.setItem('tenant_type', tenantType);
+    await AsyncStorage.setItem('user_detail',  JSON.stringify(user));
   } catch (error) {
     console.warn('AsyncStorage error: ' + error.message);
   }
@@ -25,6 +27,16 @@ export const getToken = async () => {
 };
 export const getEmail = async () => {
   let user_email = await AsyncStorage.getItem('user_email')
+  return  user_email
+};
+
+export const getRole = async () => {
+  let tenant_type = await AsyncStorage.getItem('tenant_type')
+  return tenant_type
+};
+
+export const getUser = async () => {
+  let user_email = await AsyncStorage.getItem('user_detail')
   return  user_email
 };
 

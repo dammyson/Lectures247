@@ -19,27 +19,58 @@ import { Icon } from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import HeaderBar from '../../components/HeaderBar';
 import { ScrollView } from 'react-native';
-
+import ActivityIndicator from '../../components/ActivityIndicator';
 import StarRating from 'react-native-star-rating';
-import CreditCard from '../../components/CreditCard';
+import { getEmail, getToken, getHeaders, processResponse, baseUrl, showTopNotification, } from '../../utilities';
 
 export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loading: false,
+            video_list:[]
 
         };
     }
 
     async componentDidMount() {
-
+        this.getVideosRequest()
     }
 
 
     async loginRequest() {
 
         const { email, password, is_valide_mail } = this.state
+
+    }
+
+    async getVideosRequest() {
+
+        const { email, password, is_valide_mail } = this.state
+
+        if (email == "" || password == "") {
+            showTopNotification('warning', 'field(s) cannot be empty')
+            return
+        }
+
+        this.setState({ loading: true })
+        fetch(baseUrl() + 'video/getvideos', {
+            method: 'GET', headers: getHeaders(true, await getEmail()),
+        })
+            .then(processResponse)
+            .then(res => {
+                this.setState({ loading: false })
+                const { data, statusCode} = res
+                console.warn( data, statusCode);
+                if (res.statusCode==200) {
+                    this.setState({ video_list:data })
+                } else {
+                    showTopNotification('error', res.message)
+                }
+            }).catch((error) => {
+                this.setState({ loading: false })
+                showTopNotification('error', error.message)
+            });
 
     }
 
@@ -122,7 +153,7 @@ export default class Home extends Component {
                             <Text style={{ fontSize: 12, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Featured Courses</Text>
                         </View>
                         <ScrollView showsHorizontalScrollIndicator={false}>
-                            {this.renderGallery(menuItems)}
+                            {this.renderGallery(this.state.video_list)}
                         </ScrollView>
 
                     </View>
@@ -160,14 +191,13 @@ export default class Home extends Component {
 
                         </ImageBackground>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginLeft: 15 }}>
-                            <Text style={{ fontSize: 10, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Bold' }}>Introduction to Nature</Text>
+                            <Text style={{ fontSize: 10, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Bold' }}>{data.courseTitle}</Text>
                         </View>
                         <View style={{ marginLeft: 15, width: 100, marginTop: 3 }}>
                             <StarRating
                                 disabled={false}
                                 maxStars={5}
-                                rating={this.state.starCount}
-                                selectedStar={(rating) => this.setState({ starCount: rating })}
+                                rating={data.ratings}
                                 iconSet={'FontAwesome'}
                                 starSize={15}
                                 starStyle={{ borderColor: 'red' }}
@@ -176,7 +206,7 @@ export default class Home extends Component {
                             />
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginLeft: 15 }}>
-                            <Text style={{ fontSize: 10, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>3,000 NGN</Text>
+                            <Text style={{ fontSize: 10, color: lightTheme.SECONDARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>₦{data.price}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', marginTop: 6, marginLeft: 5 }}>
 

@@ -8,26 +8,24 @@ import {
     StatusBar,
     Alert,
     Dimensions,
-   
+    Keyboard,
+    ImageBackground
 
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Container, Content } from 'native-base';
 import { lightTheme } from '../../theme/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import { Icon } from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { getHeaders, processResponse, baseUrl, showTopNotification, storeToken } from '../../utilities';
+import { getHeaders, processResponse, baseUrl, showTopNotification } from '../../utilities';
 import ActivityIndicator from '../../components/ActivityIndicator';
 
-export default class Verify extends Component {
+export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loading: false,
-            email:'pechbusorg@gmail.com',
-            password:'WelcomeDami42day',
-
+            token:'',
         };
     }
 
@@ -35,23 +33,19 @@ export default class Verify extends Component {
 
     }
 
-
     async loginRequest() {
 
-        const { email, password, is_valide_mail } = this.state
-
-        if (email == "" || password == "") {
+        const { token } = this.state
+        if (token == "") {
             showTopNotification('warning', 'field(s) cannot be empty')
             return
         }
-
         var body = JSON.stringify({
-            email: email,
-            password: password,
+            token: token,
         })
 
         this.setState({ loading: true })
-        fetch(baseUrl() + 'accounts/authenticate', {
+        fetch(baseUrl() + 'accounts/verify-email', {
             method: 'POST', headers: getHeaders(false, ""), body: body
         })
             .then(processResponse)
@@ -60,9 +54,7 @@ export default class Verify extends Component {
                 const { data, statusCode} = res
                 console.warn( data, statusCode);
                 if (res.statusCode==200) {
-                    storeToken(data.jwtToken, data.email, data.role, data)
-                    AsyncStorage.setItem('login', 'true');
-                    this.props.navigation.navigate('app');
+                    this.props.navigation.navigate('login');
                 } else {
                     showTopNotification('error', res.message)
                 }
@@ -70,7 +62,6 @@ export default class Verify extends Component {
                 this.setState({ loading: false })
                 showTopNotification('error', error.message)
             });
-
     }
 
 
@@ -78,7 +69,7 @@ export default class Verify extends Component {
 
         if (this.state.loading) {
             return (
-                <ActivityIndicator message={'Authenticating...'} />
+                <ActivityIndicator message={'Verify...'} />
             );
         }
         return (
@@ -86,7 +77,6 @@ export default class Verify extends Component {
                 <StatusBar backgroundColor={lightTheme.PRIMARY_COLOR_LIGHT} barStyle="Light-content" />
                 <LinearGradient colors={[lightTheme.PRIMARY_COLOR, lightTheme.PRIMARY_COLOR_LIGHT]} start={{ x: 1, y: 1 }} end={{ x: 1, y: 0 }} style={{ flex: 1, height: Dimensions.get('window').height, }}>
                     <Container style={{ backgroundColor: 'transparent' }}>
-
                         <Content>
                             <View style={styles.backgroundImage}>
                                 <View style={styles.mainbody}>
@@ -100,15 +90,12 @@ export default class Verify extends Component {
                                         </View>
                                     </View>
                                     <View style={{ marginLeft: 20, marginRight: 20, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: 15, }}>
-
-                                        <Text style={{ color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-Bold', fontSize: 20, marginBottom: 2, marginTop: 2 }}>L O G I N</Text>
+                                        <Text style={{ color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-Bold', fontSize: 20, marginBottom: 2, marginTop: 2 }}>V E R I F Y</Text>
                                     </View>
                                     <View style={styles.textInputContainer}>
-
-
                                         <View style={styles.input}>
                                             <TextInput
-                                                placeholder="Username "
+                                                placeholder="Email"
                                                 placeholderTextColor={lightTheme.DEFAULT_COLOR}
                                                 returnKeyType="next"
                                                 keyboardType='email-address'
@@ -116,38 +103,15 @@ export default class Verify extends Component {
                                                 autoCorrect={false}
                                                 defaultValue={this.state.email}
                                                 style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
-                                                onChangeText={(text) => this.setState({ username: text })}
+                                                onChangeText={(text) => this.setState({ token: text })}
                                                 onSubmitEditing={() => this.passwordInput.focus()}
                                             />
                                         </View>
                                     </View>
 
-                                    <View style={styles.textInputContainer}>
-                                        <View style={styles.input}>
-                                            <TextInput
-                                                placeholder="Password"
-                                                placeholderTextColor={lightTheme.DEFAULT_COLOR}
-                                                secureTextEntry
-                                                returnKeyType="next"
-                                                onSubmitEditing={() => this.loginRequest()}
-                                                keyboardType='password'
-                                                autoCapitalize="none"
-                                                autoCorrect={false}
-                                                style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
-                                                onChangeText={(text) => this.setState({ password: text })}
-                                                onSubmitEditing={() => this.passwordInput.focus()}
-                                            />
-                                        </View>
-                                    </View>
                                     <TouchableOpacity style={styles.buttonContainer} onPress={() => this.loginRequest()} >
-                                        <Text style={{ fontFamily: 'Montserrat-Regular', color: '#fff', fontSize: 14 }}>Log in</Text>
+                                        <Text style={{ fontFamily: 'Montserrat-Regular', color: '#fff', fontSize: 14 }}>Verify</Text>
                                     </TouchableOpacity>
-
-                                    <View style={{ marginLeft: 20, marginRight: 20, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: 15, }}>
-                                    <TouchableOpacity>
-                                        <Text style={{ color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-Regular', fontSize: 14, marginBottom: 2, marginTop: 20 }}>Forgot Password?</Text>
-                                        </TouchableOpacity>
-                                    </View>
                                 </View>
                             </View>
                         </Content>

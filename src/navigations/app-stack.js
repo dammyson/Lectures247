@@ -16,6 +16,7 @@ import Profile from '../screens/activities/Profile';
 import Settings from '../screens/activities/Settings';
 import Details from '../screens/activities/Details';
 import Video from '../screens/activities/Video';
+import Verify from '../screens/users/Verify';
 
 
 //console.disableYellowBox = true;
@@ -39,6 +40,7 @@ class AppStack extends Component {
             <Stack.Screen name="Splash" component={Splash}  />
             <Stack.Screen name="Welcome" component={Welcome}  />
             <Stack.Screen name="login" component={Login}  />
+            <Stack.Screen name="verify" component={Verify}  />
             <Stack.Screen name="register" component={Register}  />
             <Stack.Screen name="app" component={App}  />
             <Stack.Screen name="vd" component={Video}  />

@@ -15,11 +15,26 @@ import {
 import { lightTheme } from '../theme/colors';
 import { Icon } from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { getEmail, getUser } from '../utilities';
 
 export default class HeaderBar extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+        user: "",
 
+    };
+}
+
+async componentDidMount() {
+    this.setState({user: JSON.parse(await getUser()) })
+}
+
+
+
+  render() {
     const { image, onPress, onNotificationPress } = this.props;
+    const { user } = this.state;
 
     return (
       <View style={{ flexDirection: 'row', marginHorizontal: 20, marginTop: 20 }}>
@@ -43,7 +58,7 @@ export default class HeaderBar extends Component {
         <View style={{ marginLeft: 20, justifyContent: 'center', flex: 1 }}>
 
           <Text style={{ marginTop: 5, fontSize: 14, color: lightTheme.PRIMARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-SemiBold' }}>WELCOME</Text>
-          <Text style={{ fontSize: 14, color: lightTheme.PRIMARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-SemiBold' }}>JOHN</Text>
+          <Text style={{ fontSize: 14, color: lightTheme.PRIMARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-SemiBold' }}>{user.firstName}</Text>
           <Text style={{ fontSize: 9, color: lightTheme.PRIMARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Good to see you again</Text>
 
 

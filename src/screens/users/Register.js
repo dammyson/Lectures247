@@ -18,8 +18,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Icon } from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ActivityIndicator from '../../components/ActivityIndicator';
-import { showMessage } from 'react-native-flash-message';
-import { getHeaders, baseUrl } from '../../utilities';
+import { getHeaders, processResponse, baseUrl, showTopNotification } from '../../utilities';
 
 export default class Register extends Component {
     constructor(props) {
@@ -45,12 +44,9 @@ export default class Register extends Component {
 
 
     processRegistration() {
-
         const { lname, fname, username, email, phone, school, level, study_course, password, confirm_password } = this.state
-
-
         if (email == "" || password == "") {
-            showMessage('warning', 'field(s) cannot be empty')
+            showTopNotification('warning', 'field(s) cannot be empty')
             return
         }
 
@@ -70,23 +66,22 @@ export default class Register extends Component {
         })
 
         this.setState({ loading: true })
-        console.warn(baseUrl() + 'accounts/registration')
-        fetch(baseUrl() + 'accounts/registration', {
+        fetch(baseUrl() + 'accounts/register', {
             method: 'POST', headers: getHeaders(false, ""), body: body
         })
-            .then(res => res.text())
+            .then(processResponse)
             .then(res => {
                 this.setState({ loading: false })
-                console.warn(res);
-                // if (res.status) {
-                //     //this.props.navigation.navigate('category');
-                // } else {
-                //     showMessage('error', res.message)
-                // }
+                const { data, statusCode} = res
+                console.warn( data, statusCode);
+                if (res.statusCode==200) {
+                    this.props.navigation.navigate('verify');
+                } else {
+                    showTopNotification('error', res.message)
+                }
             }).catch((error) => {
                 this.setState({ loading: false })
-                showMessage('error', error.message)
-                console.warn(error);
+                showTopNotification('error', error.message)
             });
 
     }
@@ -123,8 +118,6 @@ export default class Register extends Component {
                                         <Text style={{ color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-Bold', fontSize: 20, marginBottom: 2, marginTop: 2 }}>SIGN UP</Text>
                                     </View>
                                     <View style={styles.textInputContainer}>
-
-
                                         <View style={styles.input}>
                                             <TextInput
                                                 placeholder="First Name "
@@ -133,7 +126,6 @@ export default class Register extends Component {
                                                 keyboardType='email-address'
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
-
                                                 style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
                                                 onChangeText={(text) => this.setState({ fname: text })}
                                                 onSubmitEditing={() => this.passwordInput.focus()}
@@ -142,8 +134,6 @@ export default class Register extends Component {
                                     </View>
 
                                     <View style={styles.textInputContainer}>
-
-
                                         <View style={styles.input}>
                                             <TextInput
                                                 placeholder="Last Name "
@@ -152,7 +142,6 @@ export default class Register extends Component {
                                                 keyboardType='email-address'
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
-
                                                 style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
                                                 onChangeText={(text) => this.setState({ lname: text })}
                                                 onSubmitEditing={() => this.passwordInput.focus()}
@@ -160,8 +149,6 @@ export default class Register extends Component {
                                         </View>
                                     </View>
                                     <View style={styles.textInputContainer}>
-
-
                                         <View style={styles.input}>
                                             <TextInput
                                                 placeholder="Username "
@@ -170,7 +157,6 @@ export default class Register extends Component {
                                                 keyboardType='email-address'
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
-                                                defaultValue={this.state.email}
                                                 style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
                                                 onChangeText={(text) => this.setState({ username: text })}
                                                 onSubmitEditing={() => this.passwordInput.focus()}
@@ -178,9 +164,7 @@ export default class Register extends Component {
                                         </View>
                                     </View>
 
-
                                     <View style={styles.textInputContainer}>
-
                                         <View style={styles.input}>
                                             <TextInput
                                                 placeholder="Email "
@@ -189,7 +173,6 @@ export default class Register extends Component {
                                                 keyboardType='email-address'
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
-                                                defaultValue={this.state.email}
                                                 style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
                                                 onChangeText={(text) => this.setState({ email: text })}
                                                 onSubmitEditing={() => this.passwordInput.focus()}
@@ -197,10 +180,7 @@ export default class Register extends Component {
                                         </View>
                                     </View>
 
-
                                     <View style={styles.textInputContainer}>
-
-
                                         <View style={styles.input}>
                                             <TextInput
                                                 placeholder="Phone "
@@ -209,7 +189,6 @@ export default class Register extends Component {
                                                 keyboardType='numeric'
                                                 autoCapitalize="none"
                                                 autoCorrect={false}
-                                                defaultValue={this.state.email}
                                                 style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
                                                 onChangeText={(text) => this.setState({ phone: text })}
                                                 onSubmitEditing={() => this.passwordInput.focus()}
@@ -217,13 +196,7 @@ export default class Register extends Component {
                                         </View>
                                     </View>
 
-
-
-
-
                                     <View style={styles.textInputContainer}>
-
-
                                         <View style={styles.input}>
                                             <TextInput
                                                 placeholder="School "
@@ -239,11 +212,7 @@ export default class Register extends Component {
                                         </View>
                                     </View>
 
-
-
                                     <View style={styles.textInputContainer}>
-
-
                                         <View style={styles.input}>
                                             <TextInput
                                                 placeholder="Level "
@@ -259,11 +228,7 @@ export default class Register extends Component {
                                         </View>
                                     </View>
 
-
-
                                     <View style={styles.textInputContainer}>
-
-
                                         <View style={styles.input}>
                                             <TextInput
                                                 placeholder="Course of Study "
@@ -310,17 +275,13 @@ export default class Register extends Component {
                                                 autoCorrect={false}
                                                 style={{ flex: 1, fontSize: 14, color: lightTheme.DEFAULT_COLOR, fontFamily: 'Montserrat-SemiBold', }}
                                                 onChangeText={(text) => this.setState({ confirm_password: text })}
-                                                onSubmitEditing={() => this.passwordInput.focus()}
-                                            />
+                                                onSubmitEditing={() => this.passwordInput.focus()} />
                                         </View>
                                     </View>
-
 
                                     <TouchableOpacity style={styles.buttonContainer} onPress={() => this.processRegistration()} >
                                         <Text style={{ fontFamily: 'Montserrat-Regular', color: '#fff', fontSize: 14 }}>CREATE ACCOUNT</Text>
                                     </TouchableOpacity>
-
-
                                 </View>
 
                             </View>

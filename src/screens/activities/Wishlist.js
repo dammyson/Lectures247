@@ -67,23 +67,17 @@ export default class Wishlist extends Component {
                                             onNotificationPress={()=> this.props.navigation.navigate('cart')}
                                         />
                                         <View style={{ marginLeft: 20, justifyContent: 'center', marginTop: 20 }}>
-
                                             <Text style={{ marginTop: 5, fontSize: 10, color: lightTheme.PRIMARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>Available Balance</Text>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                                                 <View style={{ height: 8, width: 8, borderRadius: 10, backgroundColor: lightTheme.SECONDARY_COLOR, marginRight: 6 }} />
                                                 <Text style={{ fontSize: 10, color: lightTheme.PRIMARY_TEXT_COLOR, textAlign: 'left', fontFamily: 'Montserrat-Regular' }}>NGN 4,000</Text>
                                             </View>
-
                                         </View>
-
-
                                     </View>
-
                                 </LinearGradient>
                             </View>
                         </View>
                         <View style={styles.mainbody}>
-
                         </View>
                         <View style={{ flex: 1, height: Dimensions.get('window').height }}>
                         </View>

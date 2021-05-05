@@ -4,24 +4,16 @@ import PropTypes from 'prop-types';
 import { SkypeIndicator } from 'react-native-indicators';
 import { lightTheme } from '../theme/colors';
 
-
 const width = Dimensions.get('window').width
 
-
-const ActivityIndicator = ({ name, message, onPress }) => {
-
-
+const ActivityIndicator = ({message}) => {
   return (
-
-    <View
-      style={styles.loadingBackgroundImage}
-      resizeMode="cover"
-    >
+    <View  style={styles.loadingBackgroundImage}  resizeMode="cover">
       <StatusBar barStyle="light-content" hidden={false} translucent backgroundColor="transparent" />
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <View style={styles.welcome}>
           <SkypeIndicator color={lightTheme.SECONDARY_COLOR} size={45} />
-          <Text style={{ color: lightTheme.SECONDARY_COLOR, fontFamily: 'Poppins-Light', fontSize: 13, marginBottom: 2, marginTop: 2 }}>loading...</Text>
+          <Text style={{ color: lightTheme.SECONDARY_COLOR, fontFamily: 'Poppins-Light', fontSize: 13, marginBottom: 2, marginTop: 2 }}>{message}</Text>
         </View>
       </View>
     </View>

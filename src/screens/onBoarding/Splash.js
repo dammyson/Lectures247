@@ -3,7 +3,7 @@ import {
     View,
     Text,
     TouchableOpacity,
-    TextInput,
+    AsyncStorage,
     StyleSheet,
     StatusBar,
     Image,
@@ -33,10 +33,18 @@ export default class Splash extends Component {
   }
 
 
+  initPage = () => {
+    AsyncStorage.getItem('login').then((value) => {
+      if (value == 'true') {
+        this.props.navigation.replace('app');
+      } else if (value == null) {
+        this.props.navigation.replace('Welcome');
+      } else {
+        this.props.navigation.replace('Welcome');
+      }
 
+    })
 
-  initPage = async () => {
-    this.props.navigation.navigate('Welcome');
   }
 
 
